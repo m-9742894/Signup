@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In & Sign Up Form</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .forms-container {
+            padding: 40px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 18px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 15px 15px 50px;
+            border: 2px solid #e1e1e1;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-group input::placeholder {
+            color: #999;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .toggle-form {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+        }
+
+        .toggle-form span {
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-form span:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .forgot-password a {
+            color: #999;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #667eea;
+        }
+
+        .social-login {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .social-login p {
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .social-login p::before,
+        .social-login p::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background-color: #e1e1e1;
+        }
+
+        .social-login p::before {
+            left: 0;
+        }
+
+        .social-login p::after {
+            right: 0;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border: 2px solid #e1e1e1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-3px);
+        }
+
+        /* Animasi transisi */
+        .form {
+            transition: all 0.3s ease;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+            
+            .forms-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+    <!-- Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="forms-container">
+            <!-- Form Sign In -->
+            <div class="form sign-in-form">
+                <h2 class="title">Welcome Back!</h2>
+                
+                <!-- Pesan notifikasi -->
+                <div id="signInMessage" class="message"></div>
+                
+                <!-- Form Sign In -->
+                <form id="signInForm" onsubmit="handleSignIn(event)">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="signInEmail" placeholder="Email Address" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="signInPassword" placeholder="Password" required>
+                    </div>
+                    
+                    <div class="forgot-password">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn">Sign In</button>
+                </form>
+                
+                <div class="toggle-form">
+                    Don't have an account? <span onclick="toggleForm('signup')">Sign Up</span>
+                </div>
+                
+                <!-- Social Login -->
+                <div class="social-login">
+                    <p>Or continue with</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-google"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Form Sign Up -->
+            <div class="form sign-up-form hidden">
+                <h2 class="title">Create Account</h2>
+                
+                <!-- Pesan notifikasi -->
+                <div id="signUpMessage" class="message"></div>
+                
+                <!-- Form Sign Up -->
+                <form id="signUpForm" onsubmit="handleSignUp(event)">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="signUpName" placeholder="Full Name" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="signUpEmail" placeholder="Email Address" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="signUpPassword" placeholder="Password" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="signUpConfirmPassword" placeholder="Confirm Password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn">Sign Up</button>
+                </form>
+                
+                <div class="toggle-form">
+                    Already have an account? <span onclick="toggleForm('signin')">Sign In</span>
+                </div>
+                
+                <!-- Social Sign Up -->
+                <div class="social-login">
+                    <p>Or sign up with</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-google"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk toggle antara Sign In dan Sign Up form
+        function toggleForm(formType) {
+            const signInForm = document.querySelector('.sign-in-form');
+            const signUpForm = document.querySelector('.sign-up-form');
+            
+            if (formType === 'signin') {
+                signInForm.classList.remove('hidden');
+                signUpForm.classList.add('hidden');
+            } else {
+                signInForm.classList.add('hidden');
+                signUpForm.classList.remove('hidden');
+            }
+            
+            // Reset messages
+            document.getElementById('signInMessage').style.display = 'none';
+            document.getElementById('signUpMessage').style.display = 'none';
+        }
+
+        // Fungsi untuk handle Sign In
+        function handleSignIn(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+            const messageDiv = document.getElementById('signInMessage');
+            
+            // Validasi sederhana
+            if (!email || !password) {
+                showMessage(messageDiv, 'Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showMessage(messageDiv, 'Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // Simulasi proses sign in (untuk demo)
+            // Di sini Anda bisa menambahkan logic untuk mengirim data ke server
+            
+            showMessage(messageDiv, 'Sign in successful! Welcome back!', 'success');
+            
+            // Reset form
+            document.getElementById('signInForm').reset();
+            
+            // Redirect setelah 2 detik (contoh)
+            setTimeout(() => {
+                alert('Redirecting to dashboard...');
+            }, 2000);
+        }
+
+        // Fungsi untuk handle Sign Up
+        function handleSignUp(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('signUpName').value;
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+            const confirmPassword = document.getElementById('signUpConfirmPassword').value;
+            const messageDiv = document.getElementById('signUpMessage');
+            
+            // Validasi
+            if (!name || !email || !password || !confirmPassword) {
+                showMessage(messageDiv, 'Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showMessage(messageDiv, 'Please enter a valid email address', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showMessage(messageDiv, 'Password must be at least 6 characters long', 'error');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showMessage(messageDiv, 'Passwords do not match', 'error');
+                return;
+            }
+            
+            // Simulasi proses sign up (untuk demo)
+            // Di sini Anda bisa menambahkan logic untuk mengirim data ke server
+            
+            showMessage(messageDiv, 'Account created successfully! Please sign in.', 'success');
+            
+            // Reset form
+            document.getElementById('signUpForm').reset();
+            
+            // Pindah ke form sign in setelah 2 detik
+            setTimeout(() => {
+                toggleForm('signin');
+            }, 2000);
+        }
+
+        // Fungsi untuk menampilkan pesan
+        function showMessage(element, message, type) {
+            element.textContent = message;
+            element.className = 'message ' + type;
+            element.style.display = 'block';
+            
+            // Hilangkan pesan setelah 5 detik
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+
+        // Fungsi validasi email
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Tambahkan event listener untuk validasi real-time pada form sign up
+        document.addEventListener('DOMContentLoaded', function() {
+            const signUpPassword = document.getElementById('signUpPassword');
+            const signUpConfirm = document.getElementById('signUpConfirmPassword');
+            
+            if (signUpConfirm) {
+                signUpConfirm.addEventListener('input', function() {
+                    if (signUpPassword.value !== signUpConfirm.value) {
+                        signUpConfirm.style.borderColor = '#dc3545';
+                    } else {
+                        signUpConfirm.style.borderColor = '#28a745';
+                    }
+                });
+            }
+            
+            if (signUpPassword) {
+                signUpPassword.addEventListener('input', function() {
+                    if (signUpPassword.value.length >= 6) {
+                        signUpPassword.style.borderColor = '#28a745';
+                    } else {
+                        signUpPassword.style.borderColor = '#e1e1e1';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
